@@ -35,8 +35,8 @@ async function startMenu() {
 
     try {
         allItems = await loadMenu();
-        //buildFilters(allItems);
-        //showMenu(allItems);
+        buildFilters(allItems);
+        showMenu("All");
         statusMessage.textContent = "";
     }
 
@@ -46,13 +46,99 @@ async function startMenu() {
     }
 }
 
-// 3. function showMenu(items)
+//get categories
+function getCategories() {
+    let categories = []
+
+    allItems.forEach(function (item) {
+        if (!categories.includes(item.category)) {
+            categories.push(item.category)
+        }
+    })
+    return categories;
+}
+
+//build cards
+function makeCard(item) {
+    let cardClass = 'card';
+    let badge = ''
+    let soldText = ''
+    let tagsHTML = ''
+
+    if (item.popular) {
+        badge = `<span class="badge">Popular</span>`
+    }
+    if (item.soldOut) {
+        cardClass = ' card is-sold'
+        soldText = `<p class="sold">Sold Out</p>`
+    }
+
+    item.tags.forEach(function (tag) {
+        tagsHTML += `<li>${tag}</li>`
+    })
+
+    return `
+    <article class="${cardClass}">
+        <img src="${item.image}" alt="${item.name}">
+        <div class="card-body">
+        <h3>${item.name} ${badge}</h3>
+        <p>${item.description}</p>
+        <ul class="tags">
+            ${tagsHTML}
+        </ul>
+        <p class="price">$${item.price.toFixed(2)}</p>
+        ${soldText}
+    </article>
+    `
+}
+
+
+// 3. function showMenu(chosen)
 //    One heading per category, then a card for each item:
 //    photo, name, description, price, popular badge, tags, sold out.
+function showMenu(chosen) {
+    let menuHTML = ''
+
+    getCategories().forEach(function (category) {
+        if(chosen === 'All' || chosen === category) {
+            let cardsHTML = ''
+            allItems.forEach(function (item) {
+                if (item.category === category) {
+                    cardsHTML += makeCard(item)
+                }
+            })
+            menuHTML += `<h2>${category}</h2><div class="grid">${cardsHTML}</div>`
+        }
+    })
+    menuContainer.innerHTML = menuHTML;
+}
 
 // 4. function buildFilters(items)
 //    One "All" button, plus one button per category in the data.
 //    A click shows only that category's items.
+
+function buildFilters() {
+    let buttonsHTML = `<button class="active">All</button>`
+
+    getCategories().forEach(function (category) {
+        buttonsHTML += `<button>${category}</button>`
+    })
+
+    filterContainer.innerHTML = buttonsHTML;
+    //give every button a click listener
+    const buttons = filterContainer.querySelectorAll("button")
+    buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            //move the "active" style to the clicked button
+            buttons.forEach(function (otherButton) {
+                otherButton.classList.remove("active")
+            })
+            button.classList.add("active")
+            //the button's text is the category name
+            showMenu(button.textContent)
+        })
+    })
+}
 
 // 5. Call startMenu() when the page opens.
 startMenu()

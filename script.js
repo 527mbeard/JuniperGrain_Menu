@@ -19,7 +19,7 @@ async function loadMenu() {
     const response = await fetch(API);
 
     if (!response.ok) {
-        throw new Error(HTTP + response.status);
+        throw new Error("HTTP" + response.status);
     }
 
     const items = await response.json();
@@ -81,13 +81,14 @@ function makeCard(item) {
     <article class="${cardClass}">
         <img src="${item.image}" alt="${item.name}">
         <div class="card-body">
-        <h3>${item.name} ${badge}</h3>
-        <p>${item.description}</p>
-        <ul class="tags">
-            ${tagsHTML}
-        </ul>
-        <p class="price">$${item.price.toFixed(2)}</p>
-        ${soldText}
+            <h3>${item.name} ${badge}</h3>
+            <p>${item.description}</p>
+            <ul class="tags">
+                ${tagsHTML}
+            </ul>
+            <p class="price">$${item.price.toFixed(2)}</p>
+            ${soldText}
+        </div>
     </article>
     `
 }

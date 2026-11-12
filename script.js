@@ -19,7 +19,7 @@ async function loadMenu() {
     const response = await fetch(API);
 
     if (!response.ok) {
-        throw new Error("HTTP" + response.status);
+        throw new Error("HTTP " + response.status);
     }
 
     const items = await response.json();

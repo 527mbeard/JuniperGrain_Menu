@@ -3,28 +3,160 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Menu | Juniper & Grain</title>
+  <title>Juniper &amp; Grain | Cozy Café</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
-  <header>
+
+  <!-- ============ NAVBAR (sticks to the top while you scroll) ============ -->
+  <nav class="navbar" aria-label="Main">
+    <a class="nav-brand" href="#home">
+      <span class="nav-logo" aria-hidden="true"><img src="img/logo.png" alt=""></span>
+      Juniper &amp; Grain
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#menu-section">Menu</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#visit">Visit</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero" id="home">
     <div class="logo" aria-hidden="true">
       <img src="img/logo.png" alt="">
     </div>
-    <p class="brand-name">Juniper &amp; Grain</p>
-    <h1>Our Menu</h1>
+    <h1>Juniper &amp; Grain</h1>
+    <p class="hero-text">Small-batch coffee, fresh bakes, and a cozy seat with your name on it.</p>
+    <div class="hero-buttons">
+      <a class="btn btn-primary" href="#menu-section">See the Menu</a>
+      <a class="btn btn-secondary" href="#about">Our Story</a>
+    </div>
   </header>
 
   <main>
-    <!-- Your script builds one button per category in here. -->
-    <nav id="filters"></nav>
 
-    <!-- Loading and error messages go here. -->
-    <p id="status"></p>
+    <!-- ============ ROTATING BANNER ============ -->
+    <!-- The rotation is done in style.css. If you add or remove a slide,
+         also update the numbers in the "ROTATING BANNER" part of the CSS. -->
+    <section class="banner" aria-label="News from the café">
+      <div class="slides">
+        <div class="slide">
+          <span class="slide-icon" aria-hidden="true">☕</span>
+          <p class="slide-title">Brewed slow, poured with love</p>
+          <p>From creamy lattes to smooth cold brew, every cup is made to order.</p>
+        </div>
 
-    <!-- Your script builds the category headings and item cards in here. -->
-    <section id="menu"></section>
+        <div class="slide">
+          <span class="slide-icon" aria-hidden="true">🥐</span>
+          <p class="slide-title">Baked fresh every morning</p>
+          <p>Warm pastries and breads come out of the oven before we open the doors.</p>
+        </div>
+
+        <div class="slide">
+          <span class="slide-icon" aria-hidden="true">🌿</span>
+          <p class="slide-title">Plants, patio &amp; good company</p>
+          <p>Grab a seat among the greenery and stay as long as you like.</p>
+        </div>
+
+        <div class="slide">
+          <span class="slide-icon" aria-hidden="true">🍂</span>
+          <p class="slide-title">Seasonal specials are here</p>
+          <p>Our menu changes with the seasons, so ask what's new this month.</p>
+        </div>
+      </div>
+
+      <!-- one dot per slide, lights up with its slide -->
+      <div class="dots" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
+    </section>
+
+    <!-- ============ MENU ============ -->
+    <section id="menu-section" class="section">
+      <h2 class="section-title">Our Menu</h2>
+
+      <!-- Your script builds one button per category in here. -->
+      <nav id="filters" aria-label="Menu categories"></nav>
+
+      <!-- Loading and error messages go here. -->
+      <p id="status"></p>
+
+      <!-- Your script builds the category headings and item cards in here. -->
+      <section id="menu"></section>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <!-- EDIT: this is placeholder text. Swap in the real story from the client brief. -->
+    <section id="about" class="section">
+      <h2 class="section-title">About Us</h2>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <h3>Our Story</h3>
+          <p>Juniper &amp; Grain started with a simple idea: a neighborhood café where the coffee is great, the bakes are warm, and nobody rushes you out the door.</p>
+          <p>Our name says it all. Juniper is for the greenery and calm we wanted in every corner, and grain is for the fresh bread, pastries, and oats that fill the café with good smells each morning.</p>
+          <p>Whether you're grabbing a quick latte before work or settling in with a friend for the afternoon, there's always a spot for you here.</p>
+        </div>
+
+        <ul class="values">
+          <li>
+            <span class="value-icon" aria-hidden="true">🥐</span>
+            <div>
+              <strong>Baked fresh</strong>
+              <span>Small batches, made every single morning.</span>
+            </div>
+          </li>
+          <li>
+            <span class="value-icon" aria-hidden="true">☕</span>
+            <div>
+              <strong>Coffee with care</strong>
+              <span>Slow-poured and made just how you like it.</span>
+            </div>
+          </li>
+          <li>
+            <span class="value-icon" aria-hidden="true">🌿</span>
+            <div>
+              <strong>Room to stay</strong>
+              <span>Plants on every shelf and a seat for everyone.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ VISIT ============ -->
+    <!-- EDIT: placeholder hours and address. -->
+    <section id="visit" class="section">
+      <h2 class="section-title">Visit Us</h2>
+
+      <div class="visit-card">
+        <div>
+          <h3>Hours</h3>
+          <ul class="hours">
+            <li><span>Monday - Friday</span><span>7am - 4pm</span></li>
+            <li><span>Saturday</span><span>8am - 3pm</span></li>
+            <li><span>Sunday</span><span>8am - 2pm</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Find Us</h3>
+          <p>123 Main Street<br>Your Town, ST 00000</p>
+          <p>Questions? Give us a call at (555) 555-5555.</p>
+          <a class="btn btn-primary" href="tel:5555555555">Call Us</a>
+        </div>
+      </div>
+    </section>
+
   </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Juniper &amp; Grain &middot; (555) 555-5555</p>
+  </footer>
+
 </body>
 </html>

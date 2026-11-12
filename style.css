@@ -18,6 +18,11 @@
   box-sizing: border-box;
 }
 
+/* smooth scrolling when you click a navbar link */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: "Fredoka", "Trebuchet MS", sans-serif;
@@ -32,11 +37,86 @@ body {
   background-position: 0 0, 18px 18px;
 }
 
-/* ---------- Header: striped cafe awning ---------- */
-header {
+/* ---------- Navbar ---------- */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 1.25rem;
+  background: var(--paper);
+  border-bottom: 3px solid var(--sage);
+  box-shadow: 0 4px 0 rgba(43, 33, 28, 0.08);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: "Caveat", cursive;
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--sage);
+  text-decoration: none;
+}
+
+.nav-logo {
+  position: relative;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--terracotta);
+}
+
+.nav-logo img {
+  position: absolute;
+  top: -36%;
+  left: -52%;
+  width: 208%;
+  max-width: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-links a {
+  display: block;
+  padding: 0.4rem 1.1rem;
+  font-weight: 500;
+  color: var(--sage);
+  text-decoration: none;
+  border-radius: 999px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-links a:hover {
+  color: var(--paper);
+  background: var(--sage);
+}
+
+.nav-links a:focus-visible,
+.nav-brand:focus-visible {
+  outline: 3px solid var(--terracotta);
+  outline-offset: 3px;
+}
+
+/* ---------- Hero: striped cafe awning ---------- */
+.hero {
   position: relative;
   text-align: center;
-  padding: 2.5rem 1rem 4.5rem;
+  padding: 3rem 1rem 5rem;
   background:
     repeating-linear-gradient(
       90deg,
@@ -47,7 +127,7 @@ header {
 }
 
 /* scalloped awning edge */
-header::after {
+.hero::after {
   content: "";
   position: absolute;
   left: 0;
@@ -65,7 +145,7 @@ header::after {
   display: block;
   width: 110px;
   height: 110px;
-  margin: 0 auto 0.75rem;
+  margin: 0 auto 0.9rem;
   overflow: hidden;
   border-radius: 50%;
   background: var(--paper);
@@ -83,9 +163,11 @@ header::after {
   max-width: none;
 }
 
-.brand-name,
 h1 {
-  display: inline-block;
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
   padding: 0.15rem 1.5rem 0.35rem;
   font-family: "Caveat", cursive;
   font-size: clamp(2.2rem, 6vw, 3.4rem);
@@ -97,18 +179,6 @@ h1 {
   transform: rotate(-1.5deg);
 }
 
-.brand-name {
-  display: block;
-  width: fit-content;
-  margin: 0 auto 0.6rem;
-}
-
-h1 {
-  display: block;
-  width: fit-content;
-  margin: 0 auto;
-}
-
 h1::before {
   content: "\2615  ";
 }
@@ -117,11 +187,210 @@ h1::after {
   content: "  \1F33F";
 }
 
+.hero-text {
+  max-width: 520px;
+  margin: 1.6rem auto 1.4rem;
+  padding: 0.8rem 1.4rem;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--espresso);
+  background: var(--paper);
+  border: 3px solid var(--sage);
+  border-radius: 20px;
+  box-shadow: 0 5px 0 var(--espresso);
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.9rem;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block;
+  font: inherit;
+  font-weight: 600;
+  padding: 0.6rem 1.7rem;
+  text-decoration: none;
+  border: 3px solid var(--paper);
+  border-radius: 999px;
+  box-shadow: 0 4px 0 var(--espresso);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-primary {
+  color: var(--paper);
+  background: var(--terracotta);
+}
+
+.btn-secondary {
+  color: var(--sage);
+  background: var(--paper);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--espresso);
+}
+
+.btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--espresso);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--terracotta);
+  outline-offset: 3px;
+}
+
 /* ---------- Main ---------- */
 main {
   max-width: 1100px;
   margin: 0 auto;
   padding: 3.5rem 1.25rem 3rem;
+}
+
+/* ---------- ROTATING BANNER (pure CSS, no JavaScript) ----------
+   4 slides x 5 seconds each = one 20 second loop.
+   To change the speed, change the 20s and the 5s delays below.
+   To add a slide: add it in the HTML (plus a dot), make the loop
+   (slides x seconds), and add another nth-child delay. */
+.banner {
+  position: relative;
+  padding: 1.6rem 2rem 3rem;
+  background: var(--blush);
+  border: 3px dashed var(--terracotta);
+  border-radius: 28px;
+}
+
+/* every slide sits in the same grid cell, so the box fits the tallest one */
+.slides {
+  display: grid;
+}
+
+.slide {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  animation: slide-show 20s infinite;
+}
+
+.slide:nth-child(2) {
+  animation-delay: 5s;
+}
+
+.slide:nth-child(3) {
+  animation-delay: 10s;
+}
+
+.slide:nth-child(4) {
+  animation-delay: 15s;
+}
+
+/* fade in, stay for a few seconds, fade out while the next one fades in */
+@keyframes slide-show {
+  0%   { opacity: 0; visibility: hidden; }
+  3%   { opacity: 1; visibility: visible; }
+  25%  { opacity: 1; visibility: visible; }
+  28%  { opacity: 0; visibility: hidden; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+.slide-icon {
+  font-size: 2.2rem;
+  line-height: 1.2;
+}
+
+.slide-title {
+  margin: 0.1rem 0 0.3rem;
+  font-family: "Caveat", cursive;
+  font-size: clamp(1.9rem, 4.5vw, 2.7rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--sage);
+}
+
+.slide p:not(.slide-title) {
+  max-width: 540px;
+  margin: 0;
+}
+
+.dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.dots span {
+  width: 14px;
+  height: 14px;
+  background: var(--paper);
+  border: 2px solid var(--sage);
+  border-radius: 50%;
+  animation: dot-on 20s infinite;
+}
+
+.dots span:nth-child(2) {
+  animation-delay: 5s;
+}
+
+.dots span:nth-child(3) {
+  animation-delay: 10s;
+}
+
+.dots span:nth-child(4) {
+  animation-delay: 15s;
+}
+
+@keyframes dot-on {
+  0%    { background: var(--sage); }
+  25%   { background: var(--sage); }
+  25.1% { background: var(--paper); }
+  100%  { background: var(--paper); }
+}
+
+/* hovering the banner pauses it so people can finish reading */
+.banner:hover .slide,
+.banner:hover .dots span {
+  animation-play-state: paused;
+}
+
+/* ---------- Sections ---------- */
+.section {
+  margin-top: 4.5rem;
+  scroll-margin-top: 80px;
+}
+
+#home {
+  scroll-margin-top: 80px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 1.5rem;
+  font-family: "Caveat", cursive;
+  font-size: clamp(2.2rem, 6vw, 3.2rem);
+  color: var(--sage);
+}
+
+.section-title::before,
+.section-title::after {
+  content: "";
+  flex: 1;
+  border-bottom: 3px dotted var(--leaf);
 }
 
 /* ---------- Filter buttons ---------- */
@@ -325,8 +594,11 @@ main {
   box-shadow: 0 6px 0 #a9a39a;
 }
 
+/* Gray out everything in the card EXCEPT the sold stamp.
+   (A filter on .card-body itself would wash out the stamp and
+   move it, because the script puts the stamp inside .card-body.) */
 .card.is-sold img,
-.card.is-sold .card-body {
+.card.is-sold .card-body > :not(.sold) {
   filter: grayscale(0.9);
   opacity: 0.6;
 }
@@ -335,6 +607,7 @@ main {
   position: absolute;
   top: 78px;
   left: 50%;
+  z-index: 2;
   margin: 0;
   padding: 0.2rem 1.2rem;
   font-family: "Caveat", cursive;
@@ -350,6 +623,116 @@ main {
   white-space: nowrap;
 }
 
+/* ---------- About ---------- */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+.about-card,
+.visit-card {
+  padding: 1.6rem 1.7rem;
+  background: var(--paper);
+  border: 3px solid var(--sage);
+  border-radius: 24px;
+  box-shadow: 0 6px 0 var(--sage);
+}
+
+.about-card h3,
+.visit-card h3 {
+  margin: 0 0 0.6rem;
+  font-family: "Caveat", cursive;
+  font-size: 2.1rem;
+  line-height: 1.1;
+  color: var(--sage);
+}
+
+.about-card p {
+  margin: 0 0 0.9rem;
+}
+
+.about-card p:last-child {
+  margin-bottom: 0;
+}
+
+.values {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.values li {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.1rem;
+  background: var(--mint);
+  border: 2px dashed var(--leaf);
+  border-radius: 18px;
+}
+
+.value-icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  font-size: 1.6rem;
+  background: var(--paper);
+  border: 2px solid var(--sage);
+  border-radius: 50%;
+}
+
+.values strong {
+  display: block;
+  font-weight: 600;
+  color: var(--sage);
+}
+
+.values li span:not(.value-icon) {
+  font-size: 0.95rem;
+}
+
+/* ---------- Visit ---------- */
+.visit-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.hours {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hours li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.45rem 0;
+  border-bottom: 2px dotted var(--leaf);
+}
+
+.hours li:last-child {
+  border-bottom: none;
+}
+
+.hours li span:last-child {
+  font-weight: 600;
+  color: var(--sage);
+}
+
+.visit-card p {
+  margin: 0 0 0.9rem;
+}
+
 /* ---------- Cozy footer sign-off ---------- */
 main::after {
   content: "\2615  Freshly brewed with love  \1F33F";
@@ -363,13 +746,92 @@ main::after {
   border-top: 3px dotted var(--leaf);
 }
 
+.site-footer {
+  padding: 1.1rem 1rem;
+  text-align: center;
+  color: var(--paper);
+  background: var(--sage);
+  border-top: 4px dashed var(--terracotta);
+}
+
+.site-footer p {
+  margin: 0;
+}
+
 /* ---------- Small screens ---------- */
+@media (max-width: 760px) {
+  .about-grid,
+  .visit-card {
+    grid-template-columns: 1fr;
+  }
+
+  .visit-card {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  /* hide the brand name so the four links fit in one slim row */
+  .navbar {
+    justify-content: center;
+    padding: 0.45rem 0.5rem;
+  }
+
+  .nav-brand {
+    display: none;
+  }
+
+  .nav-links a {
+    padding: 0.4rem 0.9rem;
+  }
+
+  .section,
+  #home {
+    scroll-margin-top: 64px;
+  }
+}
+
 @media (max-width: 480px) {
-  header {
-    padding-top: 1.8rem;
+  .hero {
+    padding-top: 2rem;
+  }
+
+  .hero h1 {
+    padding: 0.15rem 1rem 0.3rem;
+    font-size: 1.9rem;
+  }
+
+  .banner {
+    padding: 1.4rem 1.2rem 3rem;
   }
 
   .grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* people who prefer less motion get a still banner (first message only) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .slide,
+  .dots span {
+    animation: none;
+  }
+
+  .slide:first-child {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .dots span:first-child {
+    background: var(--sage);
+  }
+
+  .btn,
+  .card {
+    transition: none;
   }
 }
